@@ -1,33 +1,13 @@
 [Adblock Plus 2.0]
 ! Title: AakList Reborn (Anti-Adblock Killer)
+! Description: A modern, lightweight filter list for the Aak Reborn script.
 ! Author: Reek & AI
-! Version: 2025.1
+! Version: 2025.2
 ! Expires: 1 day
 ! Homepage: https://github.com/reek/anti-adblock-killer/
 
-! --- General Rules ---
-! Block common ad-tech and tracking domains
-||doubleclick.net^$third-party
-||google-analytics.com^$third-party
-||googlesyndication.com^$third-party
-||adservice.google.com^$third-party
-
-! --- Evasion Rules ---
-! Defeat CNAME cloaking and other evasive techniques
-||ad-delivery.example-client.com^$third-party
-||metrics.customer-data.com^$third-party
-
-! --- Site-Specific Rules ---
-! Forbes - New adblock wall
-forbes.com##.adblock-wall
-
-! Wired - Adblock detection script
-wired.com##script:contains(adblock)
-
-! YouTube - In-video ad overlays
-youtube.com##.ytp-ad-overlay-container
-
-! --- Generic Element Hiding ---
+! --- Section 1: Generic Element Hiding ---
+! This section hides common ad-related elements that are not caught by the script.
 ##.ad-banner
 ##.ad-container
 ##.ad-wrapper
@@ -37,3 +17,30 @@ youtube.com##.ytp-ad-overlay-container
 ##[class^="ad-"]
 ##[class*=" ad-"]
 ##[class*="-ad "]
+##[data-ad-unit]
+##[data-ad-slot]
+
+! --- Section 2: Network Blocking ---
+! This section blocks requests to known ad-tech, tracking, and analytics domains.
+||doubleclick.net^$third-party
+||google-analytics.com^$third-party
+||googlesyndication.com^$third-party
+||adservice.google.com^$third-party
+||pagead2.googlesyndication.com^$third-party
+
+! --- Section 3: Evasion Rules ---
+! These rules are designed to defeat advanced anti-adblock techniques like CNAME cloaking.
+||ad-delivery.example-client.com^$third-party
+||metrics.customer-data.com^$third-party
+
+! --- Section 4: Site-Specific Fixes ---
+! These rules target specific websites with aggressive anti-adblock measures.
+
+! Forbes - Adblock wall
+forbes.com##.adblock-wall
+
+! Wired - Adblock detection
+wired.com##script:contains(adblock)
+
+! YouTube - In-video ad overlays
+youtube.com##.ytp-ad-overlay-container
