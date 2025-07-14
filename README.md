@@ -1,4 +1,4 @@
-# Anti-Adblock Killer | Reborn (2025.3)
+# Anti-Adblock Killer | Reborn (2025.4)
 
 Welcome to the completely rewritten and modernized version of the Anti-Adblock Killer. This project, "Reborn," is a forward-looking solution designed to address the sophisticated anti-adblock technologies of 2025 and beyond.
 
@@ -16,13 +16,13 @@ The "Reborn" version operates on a new, unified architecture where the userscrip
 
 This separation of concerns ensures that the project is both effective and easy to maintain.
 
-## Key Features in Version 2025.3
+## Key Features in Version 2025.4
 
-- **Expanded Network Blocking**: The filter list now blocks a wider range of ad-tech, tracking, and analytics domains.
-- **Enhanced Anti-Adblock Detection**: New rules have been added to detect and neutralize a broader array of anti-adblock scripts and popups.
-- **Broader Site-Specific Fixes**: The script now includes fixes for popular sites like Business Insider, Washington Post, New York Times, Twitch, Reddit, and more.
-- **CNAME Cloaking Evasion**: New rules have been added to combat CNAME cloaking techniques used to disguise tracking domains.
-- **Improved Coverage**: Added rules for numerous news, entertainment, and video streaming sites.
+- **Advanced Evasion Techniques**: The script now includes functions to create fake ad elements and bypass cookie-based detection, making it harder for sites to identify.
+- **Intelligent Network Handling**: Instead of just blocking ad-related network requests, the script can now provide fake responses, tricking sites into thinking that ads are loading normally.
+- **User-Friendly Interface**: A simple menu command allows users to toggle debug mode on and off for easier troubleshooting.
+- **Comprehensive Filter List**: The filter list has been significantly expanded to include more ad networks, tracking domains, and site-specific fixes for a wider range of websites.
+- **Paywall and Storage Handling**: New rules have been added to bypass simple paywalls and clear adblock detection flags from local storage.
 
 ## Installation
 

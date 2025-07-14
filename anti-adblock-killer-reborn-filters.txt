@@ -2,7 +2,7 @@
 ! Title: AakList Reborn (Anti-Adblock Killer)
 ! Description: A modern, lightweight filter list for the Aak Reborn script.
 ! Author: Reek & AI
-! Version: 2025.3
+! Version: 2025.4
 ! Expires: 1 day
 ! Homepage: https://github.com/reek/anti-adblock-killer/
 
@@ -19,6 +19,10 @@
 ##[class*="-ad "]
 ##[data-ad-unit]
 ##[data-ad-slot]
+##[data-ad-type]
+##[data-ad-size]
+##[aria-label*="ad"]
+##[aria-label*="advert"]
 
 ! --- Section 2: Network Blocking ---
 ! This section blocks requests to known ad-tech, tracking, and analytics domains.
@@ -64,6 +68,13 @@
 ! --- Section 5: Site-Specific Fixes ---
 ! These rules target specific websites with aggressive anti-adblock measures.
 
+! Remove anti-adblock notices and overlays
+##.adblock-modal
+##.adblock-overlay
+##.adblock-notification
+##[id*="adblock-message"]
+##[class*="adblock-message"]
+
 ! Forbes - Adblock wall
 forbes.com##.adblock-wall
 
@@ -95,6 +106,18 @@ reddit.com##div[data-testid="post-container"][data-promoted="true"]
 
 ! Facebook - Sponsored content
 facebook.com##div[data-pagelet="FeedUnit"]:has([aria-label*="Sponsored"])
+
+! --- Section 6: Paywall & Storage Rules ---
+! Rules to bypass simple paywalls and clear adblock detection flags.
+
+! Bypass simple paywalls
+##.paywall
+##.subscription-wall
+##[id*="paywall"]
+
+! Clear adblock detection flags from local storage
+:root:style(script:contains(localStorage.removeItem) ~ * {--adblock-detected:0;})
+:root:style(script:contains(sessionStorage.removeItem) ~ * {--adblock-detected:0;})
 
 ! News sites
 cnn.com##.ad-slot
