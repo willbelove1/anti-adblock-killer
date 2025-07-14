@@ -1,0 +1,39 @@
+[Adblock Plus 2.0]
+! Title: AakList Reborn (Anti-Adblock Killer)
+! Author: Reek & AI
+! Version: 2025.1
+! Expires: 1 day
+! Homepage: https://github.com/reek/anti-adblock-killer/
+
+! --- General Rules ---
+! Block common ad-tech and tracking domains
+||doubleclick.net^$third-party
+||google-analytics.com^$third-party
+||googlesyndication.com^$third-party
+||adservice.google.com^$third-party
+
+! --- Evasion Rules ---
+! Defeat CNAME cloaking and other evasive techniques
+||ad-delivery.example-client.com^$third-party
+||metrics.customer-data.com^$third-party
+
+! --- Site-Specific Rules ---
+! Forbes - New adblock wall
+forbes.com##.adblock-wall
+
+! Wired - Adblock detection script
+wired.com##script:contains(adblock)
+
+! YouTube - In-video ad overlays
+youtube.com##.ytp-ad-overlay-container
+
+! --- Generic Element Hiding ---
+##.ad-banner
+##.ad-container
+##.ad-wrapper
+##.advertisement
+##.text-ad
+##[id^="ad_"]
+##[class^="ad-"]
+##[class*=" ad-"]
+##[class*="-ad "]
