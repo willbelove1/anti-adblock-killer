@@ -2,7 +2,7 @@
 ! Title: AakList Reborn (Anti-Adblock Killer)
 ! Description: A modern, lightweight filter list for the Aak Reborn script.
 ! Author: Reek & AI
-! Version: 2025.2
+! Version: 2025.3
 ! Expires: 1 day
 ! Homepage: https://github.com/reek/anti-adblock-killer/
 
@@ -27,13 +27,41 @@
 ||googlesyndication.com^$third-party
 ||adservice.google.com^$third-party
 ||pagead2.googlesyndication.com^$third-party
+||adnxs.com^$third-party
+||taboola.com^$third-party
+||outbrain.com^$third-party
+||criteo.com^$third-party
+||pubmatic.com^$third-party
+||rubiconproject.com^$third-party
+||amazon-adsystem.com^$third-party
+||scorecardresearch.com^$third-party
+||moatads.com^$third-party
+||chartbeat.com^$third-party
+||hotjar.com^$third-party
 
 ! --- Section 3: Evasion Rules ---
 ! These rules are designed to defeat advanced anti-adblock techniques like CNAME cloaking.
 ||ad-delivery.example-client.com^$third-party
 ||metrics.customer-data.com^$third-party
+||analytics.$domain=~analytics.google.com|~analytics.twitter.com
+||metrics.$third-party
+||telemetry.$third-party
+||tracking.$third-party
+||stats.$third-party
 
-! --- Section 4: Site-Specific Fixes ---
+! --- Section 4: Anti-Adblock Detection Rules ---
+! Rules to prevent scripts from detecting adblockers and showing popups.
+##script:contains(/adblock|AdBlock|adsBlocked|blockedAds|checkAdBlock/)
+##script:contains(/fuckAdBlock|blockAdBlock|sniffAdBlock|canRunAds|isAdBlockActive/)
+##script:contains(/adsbygoogle.js/)
+##.adblock-notice
+##.adblock-warning
+##.ad-blocker-warning
+##[class*="adblock-detect"]
+##[id*="adblock-detect"]
+##div[class*="anti-adblock"]
+
+! --- Section 5: Site-Specific Fixes ---
 ! These rules target specific websites with aggressive anti-adblock measures.
 
 ! Forbes - Adblock wall
@@ -44,3 +72,39 @@ wired.com##script:contains(adblock)
 
 ! YouTube - In-video ad overlays
 youtube.com##.ytp-ad-overlay-container
+
+! Business Insider - Anti-adblock wall
+businessinsider.com##.tp-modal
+businessinsider.com##.tp-backdrop
+
+! Washington Post - Adblock detection
+washingtonpost.com##div[id^="wall-"]
+
+! New York Times - Subscription wall
+nytimes.com##div[id*="gateway-content"]
+
+! Medium - Member-only content wall
+medium.com##.meteredContent
+
+! Twitch - Video ads
+twitch.tv##.video-player__overlay
+twitch.tv##.ads-manager-ad
+
+! Reddit - Promoted posts
+reddit.com##div[data-testid="post-container"][data-promoted="true"]
+
+! Facebook - Sponsored content
+facebook.com##div[data-pagelet="FeedUnit"]:has([aria-label*="Sponsored"])
+
+! News sites
+cnn.com##.ad-slot
+foxnews.com##.ad-container
+theguardian.com##.ad-slot-container
+
+! Entertainment sites
+imdb.com##.ads-inline
+rottentomatoes.com##.advertisement
+
+! Video streaming sites
+dailymotion.com##.ad_container
+vimeo.com##.ads-module
