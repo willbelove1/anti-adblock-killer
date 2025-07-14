@@ -3,7 +3,7 @@
 // @namespace https://userscripts.org/scripts/show/155840
 // @description Helps you keep your Ad-Blocker active, when you visit a website and it asks you to disable.
 // @author Reek | reeksite.com
-// @version 10.0
+// @version 12.0
 // @encoding utf-8
 // @license https://creativecommons.org/licenses/by-sa/4.0/
 // @icon https://raw.github.com/reek/anti-adblock-killer/master/anti-adblock-killer-icon.png
@@ -75,7 +75,7 @@
   
   var Aak = {
     name : 'Anti-Adblock Killer',
-    version : '10.0',
+    version : '12.0',
     scriptid : 'gJWEp0vB',
     homeURL : 'https://github.com/reek/anti-adblock-killer/',
     changelogURL : 'https://github.com/reek/anti-adblock-killer#changelog',
@@ -97,7 +97,66 @@
       Aak.registerCommands(); // add commands to menu
       Aak.checkUpdate(true); // check if AakScript is up to date.
       Aak.checkList(); // check if AakList is enabled.
+      Aak.modernBlockDetect(); // use modern detection techniques
       Aak.blockDetect(); // detect and kill anti-adblocks.
+    },
+    modernBlockDetect: function() {
+        const config = {
+            debug: false,
+            keywords: ['adblock', 'ads', 'advert', 'sponsor', 'banner', 'fuckadblock', 'blockadblock'],
+        };
+
+        const log = message => {
+            if (config.debug) console.log(`[Aak-Killer] ${message}`);
+        };
+
+        const neutralizeGlobals = () => {
+            const definitions = {
+                'adblock': false, 'adblocker': false, 'isAdBlockActive': false,
+                'FuckAdBlock': () => {}, 'BlockAdBlock': () => {},
+            };
+            for (const [key, value] of Object.entries(definitions)) {
+                Object.defineProperty(window, key, { value, writable: false, configurable: true });
+            }
+            log('Global detectors neutralized.');
+        };
+
+        const interceptScripts = () => {
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.tagName === 'SCRIPT') {
+                            const scriptContent = node.innerHTML;
+                            const scriptSrc = node.src;
+                            if (config.keywords.some(kw => scriptContent.includes(kw) || (scriptSrc && scriptSrc.includes(kw)))) {
+                                node.textContent = '';
+                                if (node.src) node.src = 'about:blank';
+                                log(`Neutralized script: ${scriptSrc || 'inline'}`);
+                            }
+                        }
+                    });
+                });
+            });
+            observer.observe(document.documentElement, { childList: true, subtree: true });
+            log('Script interceptor active.');
+        };
+
+        const interceptFetch = () => {
+            const originalFetch = window.fetch;
+            window.fetch = async (url, options) => {
+                const urlString = (typeof url === 'string') ? url : (url && url.url);
+                if (urlString && config.keywords.some(kw => urlString.includes(kw))) {
+                    log(`Blocking fetch request to: ${urlString}`);
+                    return Promise.reject(new Error('Blocked by Aak-Killer'));
+                }
+                return originalFetch(url, options);
+            };
+            log('Fetch interceptor active.');
+        };
+
+        neutralizeGlobals();
+        interceptScripts();
+        interceptFetch();
     },
     aabs : {},
     opts : {},

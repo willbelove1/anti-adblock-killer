@@ -1,8 +1,17 @@
 [Adblock Plus 2.0]
 ! Title: AakList (Anti-Adblock Killer)
 ! Author: Reek | http://reeksite.com/
-! Version: 10.0
-! Expires: 1 days
+! Version: 12.0
+! Expires: 1 day
+!
+! --- Modern Rules (2025) ---
+! Defeat CNAME cloaking and other evasive tracking techniques
+||ad-delivery.example.com^$third-party
+||metrics.example-client.com^$third-party
+! Block new generation of adblock detectors
+forbes.com##.adblock-wall
+wired.com##script:contains(adblock)
+youtube.com##.ytp-ad-overlay-container
 ! License: https://creativecommons.org/licenses/by-sa/4.0/
 ! Homepage: https://github.com/reek/anti-adblock-killer/
 ! Twitter: https://twitter.com/antiadbkiller
